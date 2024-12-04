@@ -1,0 +1,47 @@
+<div class="min-h-screen bg-gray-900 flex items-center justify-center p-6">
+  <div class="w-full max-w-lg">
+    <div class="relative">
+      <input
+        type="text"
+        placeholder="Digite o DDD"
+        [(ngModel)]="ddd"
+        pattern="[0-9]*"
+        maxlength="2"
+        class="w-full bg-gray-800 text-white text-lg px-4 py-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        (input)="getDdd()"
+      />
+      <button
+        class="absolute top-3 right-4 text-gray-400 hover:text-white"
+        (click)="ddd = ''; dddResponse = null"
+      >
+        ✕
+      </button>
+    </div>
+
+    <div class="mt-4 bg-gray-800 rounded-lg shadow-lg" *ngIf="dddResponse">
+      <div class="p-4 border-b border-gray-700">
+        <h2 class="text-white text-lg font-semibold">Seu CEP é do:</h2>
+        <p class="text-gray-400 text-sm mt-1">
+          {{ dddResponse.state || "Não encontrado" }}
+        </p>
+      </div>
+
+      <div class="p-4 space-y-6">
+        <div *ngIf="dddResponse.cities.length > 0; else noCities">
+          <h3 class="text-gray-300 text-sm font-semibold mb-2">Cidades</h3>
+          <div class="flex flex-wrap gap-3">
+            <div
+              *ngFor="let city of dddResponse.cities"
+              class="px-3 py-1 bg-gray-700 text-gray-300 text-sm rounded-lg hover:bg-gray-600"
+            >
+              {{ city }}
+            </div>
+          </div>
+        </div>
+        <ng-template #noCities>
+          <p class="text-gray-400 text-sm">Nenhuma cidade encontrada.</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
